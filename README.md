@@ -32,7 +32,7 @@ master
   
   - Delay.c 
 
--  ESP8266(main folder)
+- ESP8266(main folder)
   
   - esp8266_driver.h  
   
@@ -74,7 +74,7 @@ use `esp8266_sendcmd()` function for send command, the response must be specifie
 
 the program use call-back function for receive data (defined as static functions in `esp8266_command_func.c` and with suffix `_cb`) , so you can add your command  function here. 
 
-## ## Usage
+## Usage
 
 in the main  function, include this library just use :  
 
