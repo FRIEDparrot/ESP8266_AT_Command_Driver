@@ -279,7 +279,7 @@ ESP_Error_t esp8266_sendcmd(const char* cmd,const char* response, uint8_t (*cmd_
     _esp8266_clearCmdList();  // always clear this buff
 
     // timeout error handeling
-    if (esp_timeout_counter >= ESP8266_RESPONSE_TIMEOUT){ 
+    if (esp_timeout_counter >= ESP8266_RESPONSE_TIMEOUT+ extra_command_timeout){ 
         esp_timeout_counter = 0;
         _esp8266_clearRxBuffer();
         result = ESP_RES_CMD_NO_RESPONSE_ERR;
