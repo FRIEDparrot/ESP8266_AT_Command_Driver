@@ -25,16 +25,24 @@ It can provide software support driver for esp8266 UART full module(such as [WiF
 file structure of this library is listed as follows: 
 
 master  
-├  Delay_func (only provide delay functions, you can change it to your delay function)   
- |    - Delay.h  
- |    - Delay.c  
-└─ESP8266  
-     - esp8266_driver.h  
-     - esp8266_driver.c  
-     - esp8266_command_func.c
-     - esp8266_command_func.h 
 
-- example_code.c 
+- Delay_func (only provide delay functions, you can change it to your delay function)   
+  
+  - Delay.h
+  
+  - Delay.c 
+
+-  ESP8266(main folder)
+  
+  - esp8266_driver.h  
+  
+  - esp8266_driver.c  
+  
+  - esp8266_command_func.c
+  
+  - esp8266_command_func.h 
+  
+  - example_code.c 
 
 ## Hardware Information
 
