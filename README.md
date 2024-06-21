@@ -52,6 +52,8 @@ Pin of the ESP8266 module is shown at this image:
 
 this driver use USART3 as the transfer USART, so the default pin  layout is (define it in `esp8266_driver.h`, if you change this, don't forget change init functions and interrupt function): 
 
+**CAUTION:  USART BaudRate is default set as: 115200**
+
 - RX - PB10
 
 - TX - PB 11 
