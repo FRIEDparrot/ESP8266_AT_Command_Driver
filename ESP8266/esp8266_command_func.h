@@ -58,10 +58,10 @@ ESP_Error_t esp8266_cmd_wifi_get_mode(uint8_t *mode);  // AT+CWMODE?
 ESP_Error_t esp8266_cmd_wifi_set_mode(uint8_t mode);   // AT+CWMODE=
 ESP_Error_t esp8266_cmd_wifi_set_joinAP(uint8_t no_param, const char* ssid, const char* pwd);  // AT+CWJAP=
 ESP_Error_t esp8266_cmd_wifi_quitAP(void);             // AT+CWQAP
-ESP_Error_t esp8266_cmd_wifi_get_cipaddress(ESP_STATION_INFO_t *station_addr);
+ESP_Error_t esp8266_cmd_wifi_get_cipaddress(ESP_STATION_INFO_t *station_addr);  // AT+ CIPSTA?
+ESP_Error_t esp8266_cmd_wifi_set_softAPconfig(char *ssid, char* pwd, uint16_t chl, uint8_t ecn, uint8_t max_conn); // AT+CWSAP=
 
 // --------------------- TCP_IP functions ----------------------
-
 ESP_Error_t esp8266_cmd_tcp_set_cipmux(uint8_t mux_mode);   // AT+CIPMUX=
 ESP_Error_t esp8266_cmd_tcp_get_cipmux(uint8_t *mux_mode);  // AT+CIPMUX?
 ESP_Error_t esp8266_cmd_tcp_set_tcpServer(uint8_t mode,  uint16_t port);  // AT+CIPSERVER=

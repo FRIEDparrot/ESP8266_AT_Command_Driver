@@ -69,7 +69,7 @@ static uint8_t string_startmatch(const char* str, const char* str_start, char** 
         // failed to compare the start string:
         return 1;
     }
-    (*str_output) = malloc((length + 1) * sizeof(char));
+    (*str_output) = (char*)malloc((length + 1) * sizeof(char));
     strncpy((*str_output), str+s, length);
     return 0;
 }
@@ -88,7 +88,7 @@ static uint8_t string_join_command(char** str_dest, const char* start_str,...){
         free((*str_dest));
         (*str_dest) = NULL;
     }
-    (*str_dest) = malloc(ESP8266_TX_BUFFER_SIZE * sizeof(char));
+    (*str_dest) = (char*)malloc(ESP8266_TX_BUFFER_SIZE * sizeof(char));
     strcpy((*str_dest), start_str);
     
     va_list arg;
@@ -360,6 +360,34 @@ ESP_Error_t esp8266_cmd_wifi_get_cipaddress(ESP_STATION_INFO_t *station_addr){
         station_addr -> ip = Esp8266_station_infomation.ip;
         station_addr -> gateway = Esp8266_station_infomation.gateway;
         station_addr -> netmask = Esp8266_station_infomation.netmask;
+    }
+    return result;
+}
+
+/// @brief softAP configuration
+/// @param ssid Wifi Name, must be a string 
+/// @param pwd password for wifi 
+/// @param chl message channel number 
+/// @param ecn encode method  0: OPEN; 1: WPA_PSK;  2: WPA2_PSK; 3:WPA_WPA2_PSK 
+/// @param max_conn if not use max_conn parameter, set it to zero
+/// @return 
+ESP_Error_t esp8266_cmd_wifi_set_softAPconfig(char *ssid, char* pwd, uint16_t chl, uint8_t ecn, uint8_t max_conn){  // AT + CWSAP
+// +CWSAP:<ssid>,<pwd>,<channel>,<ecn>,<max conn>,<ssid hidden>
+    ESP_Error_t result = ESP_RES_OK;
+    if (max_conn > 10 || ecn > 4 || strlen(pwd) < 8 || strlen(pwd) > 64) return ESP_RES_PARA_INVALID;
+    
+    char buf1[10], buf2[10], buf3[10];
+    sprintf(buf1, "%d", chl); sprintf(buf2,"%d",ecn); sprintf(buf3,"%d", max_conn);
+    
+    char* cmd = NULL;
+    if (max_conn == 0){
+        if (string_join_command(&cmd, "AT+CWSAP=", ssid, pwd, buf1, buf2, NULL)) return ESP_RES_TxBUFFER_FULL;
+    }else{
+        if (string_join_command(&cmd, "AT+CWSAP=", ssid, pwd, buf1, buf2, buf3, NULL)) return ESP_RES_TxBUFFER_FULL;
+    }
+    result = esp8266_sendcmd(cmd,"OK", NULL);
+    if (cmd != NULL){
+        free(cmd);  cmd = NULL;
     }
     return result;
 }

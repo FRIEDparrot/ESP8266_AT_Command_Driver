@@ -17,7 +17,6 @@
 static char ESP_Rx_buffer[ESP8266_RX_BUFFER_SIZE];
 static char ESP_Rx_buffer_shadow[ESP8266_RX_BUFFER_SIZE];    // shadow buffer to avoid
 
-
 // static char ESP_Tx_buffer[ESP8266_TX_BUFFER_SIZE];        // Tx buffer 
 static struct ESP_MSG_LIST ESP_Cmd_List;                     // command List variable 
 
@@ -192,7 +191,7 @@ static uint8_t _esp8266_convert_msg_cb(void){
             free(ESP_Cmd_List.cmd_buffer[idx]);   
             ESP_Cmd_List.cmd_buffer[idx] = NULL;
         }
-        ESP_Cmd_List.cmd_buffer[idx] = malloc((strlen(pch) + 1) * sizeof(char)); // the string end with "\0"
+        ESP_Cmd_List.cmd_buffer[idx] = (char*)malloc((strlen(pch) + 1) * sizeof(char)); // the string end with "\0"
         // not take account if malloc failed
         strcpy(ESP_Cmd_List.cmd_buffer[idx], pch); // record the command into list
         pch = strtok(NULL,"\r\n");
@@ -243,6 +242,9 @@ ESP_Error_t esp8266_Init(void){
     return ESP_RES_OK;
 }
 
+#ifdef __cplusplus
+    extern "C"{
+#endif 
 /// @brief send the command, wait for response string 
 /// @param cmd           string with command (must end with "\\r\\n")
 /// @param response      string need to check for response (such as "OK")
@@ -277,15 +279,19 @@ ESP_Error_t esp8266_sendcmd(const char* cmd,const char* response, uint8_t (*cmd_
         esp_timeout_counter++;
     }
     _esp8266_clearCmdList();  // always clear this buff
-
+    
     // timeout error handeling
-    if (esp_timeout_counter >= ESP8266_RESPONSE_TIMEOUT+ extra_command_timeout){ 
+    if (esp_timeout_counter >= ESP8266_RESPONSE_TIMEOUT + extra_command_timeout){ 
         esp_timeout_counter = 0;
         _esp8266_clearRxBuffer();
         result = ESP_RES_CMD_NO_RESPONSE_ERR;
     }
     return result;
 }
+
+#ifdef __cplusplus
+    }
+#endif
 
 /// this is the function to be called in the main loop, but in a cmd send function
 ///  it will wait message and do the logic. it will be added in the next version.
