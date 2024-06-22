@@ -60,11 +60,11 @@ this driver use USART3 as the transfer USART, so the default pin  layout is (def
 
 - **EN - VCC (don't use PB6 or you should add delay after GPIO initialize)**
 
-- RST - PB7 
+- **RST - floating(may be unstable when connect PB7)** 
 
-- **IO0 - GND (note: this will avoid  the device restart continuously)** 
+- **IO0 - GND or floating (note: connect with GND will avoid  the device restart continuously)** 
 
-- IO1 - PB1(can be leave as float)
+- IO1 - PB1(can be leave as float) 
 
 ## Command Receiver Structure
 
