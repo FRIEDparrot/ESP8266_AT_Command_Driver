@@ -62,7 +62,7 @@ this driver use USART3 as the transfer USART, so the default pin  layout is (def
 
 - RST - PB7 
 
-- IO0 - PB0(can be leave as float) 
+- **IO0 - GND (note: this will avoid  the device restart continuously)** 
 
 - IO1 - PB1(can be leave as float)
 

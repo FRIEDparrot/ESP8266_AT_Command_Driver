@@ -83,7 +83,7 @@ static void _esp8266_ioinit(void){
     ESP_Set_RST(1);
     ESP_Set_EN(1);
 
-    ESP_Set_GPIO0(1);
+    ESP_Set_GPIO0(0);
     ESP_Set_GPIO2(0);
 }
 
