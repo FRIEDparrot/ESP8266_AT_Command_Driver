@@ -425,7 +425,7 @@ ESP_Error_t  esp8266_cmd_tcp_get_cipmux(uint8_t *mux_mode){
 }
 
 /// @brief delete or create TCP server 
-/// @param mode close server
+/// @param mode 0: close server ;  1: start server
 /// @param port if mode is 1, set port to listen; 
 ///        when mode is 0, 0: shutdown the server and keep existing connections.
 ///                        1: shutdown the server and close all connections.
