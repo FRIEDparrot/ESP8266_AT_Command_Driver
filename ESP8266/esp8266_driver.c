@@ -43,6 +43,9 @@ static uint8_t _esp8266_convert_msg_cb(void);
 
 
 /* ==============  Interrupt functions  ====================*/
+#ifdef __cplusplus
+    extern "C"{
+#endif 
 /// @brief read data in interruption function Into Rx Buffer 
 /// @note  if the received char is "\\n", will automatically copy the Rx buffer to Rx_buffer_shadow
 /// @param 
@@ -68,7 +71,9 @@ void USART3_IRQHandler(void){
         USART_ClearITPendingBit(ESP_USART,USART_IT_RXNE);
     }
 }
-
+#ifdef __cplusplus
+    }
+#endif
 /* ============ static function definition ======================= */
 /// @brief init ESP8266 gpio function
 /// @param 
